@@ -1,9 +1,12 @@
 import smtplib,string,random,time,sys
-sender = "email@email.com"
-passwd = "password"
+#import credential from .env file
+from dotenv import load_dotenv
+load_dotenv()
+import os
+sender = os.getenv('SENDER')
+passwd = os.getenv('PASSWD')
 #fd = open('mail.txt', 'r')
 #emails =  fd.readlines()
-
 def generate_random_subject():
     return "Subject: " + ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(5,30))) + "\n\n"
 
@@ -25,6 +28,7 @@ def automated_mail(list):
     
 
 if __name__ == "__main__":
-    mails = sys.argv[1:]
-    for i in range(100):
+    mails = sys.argv[2:]
+    numbers = int(sys.argv[1])
+    for i in range(numbers):
         automated_mail(mails)
