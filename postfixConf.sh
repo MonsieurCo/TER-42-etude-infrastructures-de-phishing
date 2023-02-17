@@ -35,6 +35,29 @@ sudo postconf -e "myhostname = $domain"
 sudo postconf -e "mydestination = $domain, localhost.$domain, localhost"
 sudo postconf -e "myorigin = /etc/mailname"
 
+#  generate a opendkim key
+sudo opendkim-genkey -s mail -d $domain
+
+# move the key to the opendkim folder
+sudo mv mail.private /etc/opendkim/keys/$domain/mail.private
+
+# change the permissions of the key
+sudo chmod 400 /etc/opendkim/keys/$domain/mail.private
+
+# update the opendkim.conf file
+sudo sed -i "s/KeyTable.*$/KeyTable refile:\/etc\/opendkim\/KeyTable/" /etc/opendkim.conf
+sudo sed -i "s/SigningTable.*$/SigningTable refile:\/etc\/opendkim\/SigningTable/" /etc/opendkim.conf
+
+# update the KeyTable file
+echo "mail._domainkey.$domain $domain:mail:/etc/opendkim/keys/$domain/mail.private" | sudo tee /etc/opendkim/KeyTable
+
+# update the SigningTable file
+echo "*@$domain mail._domainkey.$domain" | sudo tee /etc/opendkim/SigningTable
+
+dkim_record=$(sudo cat /etc/opendkim/keys/$domain/mail.txt)
+
+echo $dkim_record
+
 # update the /etc/mailname file
 echo $domain | sudo tee /etc/mailname
 

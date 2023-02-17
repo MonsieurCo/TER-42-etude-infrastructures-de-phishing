@@ -1,7 +1,7 @@
 version: '3'
 services:
   postfix:
-    image: postfix:latest
+    image: juanluisbaptiste/postfix
     environment:
       MYHOSTNAME: ${DOMAIN_NAME}
     volumes:
@@ -10,7 +10,7 @@ services:
       - "25:25"
       - "587:587"
   dovecot:
-    image: dovecot:latest
+    image: dovecot/dovecot
     volumes:
       - ./dovecot:/etc/dovecot
     ports:
