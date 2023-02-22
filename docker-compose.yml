@@ -3,9 +3,8 @@ services:
   postfix:
     image: juanluisbaptiste/postfix
     environment:
-      MYHOSTNAME: ${DOMAIN_NAME}
-    volumes:
-      - ./postfix:/etc/postfix
+      SMTP_SERVER: ${IP} 
+      SERVER_HOSTNAME: ${DOMAIN_NAME}
     ports:
       - "25:25"
       - "587:587"
@@ -13,8 +12,6 @@ services:
       - mail
   dovecot:
     image: dovecot/dovecot
-    volumes:
-      - ./dovecot:/etc/dovecot
     ports:
       - "143:143"
       - "993:993"
