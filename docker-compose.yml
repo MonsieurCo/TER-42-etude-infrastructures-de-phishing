@@ -1,10 +1,13 @@
 version: '3'
 services:
   postfix:
-    image: juanluisbaptiste/postfix
+    image: wailram/postfix
     environment:
       SMTP_SERVER: ${IP} 
       SERVER_HOSTNAME: ${DOMAIN_NAME}
+      DESTINATION: ${DESTINATION}
+      USERNAME_ACCOUNT: ${USERNAME_ACCOUNT}
+      PASSWORD_ACCOUNT: ${PASSWORD_ACCOUNT}
     ports:
       - "25:25"
       - "587:587"
