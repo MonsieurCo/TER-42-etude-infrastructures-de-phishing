@@ -14,7 +14,10 @@ services:
     networks:
       - mail
   dovecot:
-    image: dovecot/dovecot
+    image: wailram/dovecot:latest
+    environment:
+      USERNAME_ACCOUNT: ${USERNAME_ACCOUNT}
+      PASSWORD_ACCOUNT: ${PASSWORD_ACCOUNT}
     ports:
       - "143:143"
       - "993:993"
