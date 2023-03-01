@@ -1,0 +1,6 @@
+[submodule "docker-postfix"]
+	path = docker-postfix
+	url = https://github.com/PierreKy-org/docker-postfix
+[submodule "docker-dovecot"]
+	path = docker-dovecot
+	url = https://github.com/PierreKy-org/docker-dovecot
